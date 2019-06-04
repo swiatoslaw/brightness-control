@@ -50,9 +50,9 @@ def start_app():
         window.set_focus()
 
     except ProcessNotFoundError:
-        app = Application(backend='uia').start(cmd, timeout=10)
+        app = Application(backend='uia').start(cmd, timeout=15)
         window = app.dialog
-        window.exists(10, 1)
+        window.exists(timeout=15, retry_interval=1)
         window.set_focus()
 
     return app, window
