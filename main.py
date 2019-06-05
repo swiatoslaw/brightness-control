@@ -1,4 +1,4 @@
-from argparse import ArgumentParser
+from argparse import ArgumentParser, ArgumentTypeError
 from contextlib import contextmanager
 from ctypes import windll
 
@@ -17,7 +17,7 @@ def block_mouse():
 def check_value(value):
     if 0 <= int(value) <= 100:
         return int(value)
-    raise argparse.ArgumentTypeError('value {} not in range [0-100]'.format(value))
+    raise ArgumentTypeError('value {} not in range [0-100]'.format(value))
 
 
 def center_mouse() -> None:
