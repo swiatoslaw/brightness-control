@@ -1,8 +1,17 @@
-import argparse
+from argparse import ArgumentParser
+from contextlib import contextmanager
+from ctypes import windll
 
 import pyautogui
 from pywinauto import Application, Desktop
 from pywinauto.application import ProcessNotFoundError
+
+
+@contextmanager
+def block_mouse():
+    windll.user32.BlockInput(True)
+    yield
+    windll.user32.BlockInput(False)
 
 
 def check_value(value):
@@ -77,9 +86,11 @@ def start(value):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='OnScreen Control Brightness Changer')
+    parser = ArgumentParser(description='OnScreen Control Brightness Changer')
     parser.add_argument('value', type=check_value, metavar='[0-100]')
     arg = parser.parse_args()
 
-    start(arg.value)
+    with block_mouse():
+        start(arg.value)
+
     center_mouse()
