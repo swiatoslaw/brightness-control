@@ -7,17 +7,24 @@ from pywinauto import Application, Desktop
 from pywinauto.application import ProcessNotFoundError
 
 
+class ControlNotFound(Exception):
+    """Raised when the control wasn't found"""
+
+
 @contextmanager
 def block_mouse():
-    windll.user32.BlockInput(True)
-    yield
-    windll.user32.BlockInput(False)
+    if bool(windll.shell32.IsUserAnAdmin()):
+        windll.user32.BlockInput(True)
+        yield
+        windll.user32.BlockInput(False)
+    else:
+        yield
 
 
 def check_value(value):
     if 0 <= int(value) <= 100:
         return int(value)
-    raise ArgumentTypeError('value {} not in range [0-100]'.format(value))
+    raise ArgumentTypeError('Value {} not in range [0-100]'.format(value))
 
 
 def center_mouse() -> None:
@@ -25,28 +32,28 @@ def center_mouse() -> None:
     pyautogui.moveTo(x / 2, y / 2)
 
 
-def systray_rclick(text: str):
-    systray = Application().connect(path='explorer').ShellTrayWnd.NotificationAreaToolbar
+def tray_click(button_text: str):
+    systray = Desktop(backend='uia').taskbar.child_window(title_re=".*Notification Area")
 
-    for i in range(systray.button_count()):
-        if systray.button(i).text() == text:
-            systray.button(i).click_input('right')
+    for btn in systray.buttons():
+        if btn.window_text() == button_text:
+            btn.right_click_input()
             break
     else:
-        raise RuntimeError('System tray button "{}" not found!'.format(text))
+        raise ControlNotFound(button_text)
 
 
-def systray_menu_click(automation_id: str):
-    systray_rclick('OnScreen Control')
+def tray_menuclick(auto_id: str):
+    tray_click('OnScreen Control')
 
     menu = Desktop(backend='uia').dialog.menu
 
     for item in menu.items():
-        if item.automation_id() == automation_id:
+        if item.automation_id() == auto_id:
             item.click_input()
             break
     else:
-        raise RuntimeError('Menu option "{}" not found!'.format(automation_id))
+        raise ControlNotFound(auto_id)
 
 
 def start_app():
@@ -54,7 +61,7 @@ def start_app():
 
     try:
         app = Application(backend='uia').connect(path=cmd, timeout=1)
-        systray_menu_click('menuStartOSC2')
+        tray_menuclick('menuStartOSC2')
         window = app.dialog
         window.set_focus()
 
@@ -81,7 +88,7 @@ def start(value):
     contrast.set_value(value)
 
     window.close()
-    systray_menu_click('menuExit')
+    tray_menuclick('menuExit')
     # app.kill()
 
 
