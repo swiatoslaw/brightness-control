@@ -63,13 +63,12 @@ def start_app():
         app = Application(backend='uia').connect(path=cmd, timeout=1)
         tray_menuclick('menuStartOSC2')
         window = app.dialog
-        window.set_focus()
-
     except ProcessNotFoundError:
         app = Application(backend='uia').start(cmd, timeout=15)
         window = app.dialog
         window.exists(timeout=15, retry_interval=1)
-        window.set_focus()
+
+    window.set_focus()
 
     return app, window
 
