@@ -1,8 +1,6 @@
 from argparse import ArgumentParser, ArgumentTypeError
-from contextlib import contextmanager
-from ctypes import windll
 
-from pyautogui import hotkey, size, moveTo
+from pyautogui import size, moveTo
 from pywinauto import Application, Desktop
 from pywinauto.application import ProcessNotFoundError
 
@@ -11,23 +9,6 @@ from action_center import action_center
 
 class ControlNotFound(Exception):
     """Raised when the control wasn't found"""
-
-
-@contextmanager
-def block_mouse():
-    # Show desktop
-    hotkey('win', 'm')
-
-    if bool(windll.shell32.IsUserAnAdmin()):
-        windll.user32.BlockInput(True)
-        yield
-        windll.user32.BlockInput(False)
-    else:
-        yield
-
-    # Restore minimized windows
-    hotkey('shift', 'win', 'm')
-    center_mouse()
 
 
 def check_value(value):
@@ -110,5 +91,4 @@ if __name__ == '__main__':
     parser.add_argument('value', type=check_value, metavar='[0-100]')
     arg = parser.parse_args()
 
-    with block_mouse():
-        start(arg.value)
+    start(arg.value)
