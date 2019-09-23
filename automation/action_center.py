@@ -1,10 +1,7 @@
 from pywinauto import Desktop
-from pywinauto.timings import Timings
 
 
 def action_center(action, enable=False):
-    Timings.fast()
-
     desktop = Desktop(backend='uia')
 
     action_btn = desktop.taskbar.child_window(class_name='TrayNotifyWnd').action_center

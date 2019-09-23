@@ -1,7 +1,7 @@
 import wx
 from wx.lib import masked
 
-from ids import ID
+from app.definitions import ID
 
 
 class HeaderCtrl(wx.StaticText):
@@ -29,7 +29,6 @@ class ValueField(masked.TextCtrl):
         self.SetFont(font)
         self.SetCtrlParameters(mask='###', emptyInvalid=True, formatcodes='V',
                                validRegex=r'^([0-9]\s\s|[1-9][0-9]\s|100)$')
-        self.ChangeValue('35')
 
         self.Bind(wx.EVT_TEXT, self.on_edit)
 
@@ -87,48 +86,4 @@ class BottomButtons(wx.BoxSizer):
 
         for button in [button_set, button_set_close, button_close]:
             button.SetFont(font)
-            button.Bind(wx.EVT_BUTTON, self.on_button)
             self.Add(button, flags)
-
-    # noinspection PyMethodMayBeStatic
-    def on_button(self, event):
-        button_id = event.GetId()
-
-        if button_id == ID.SET:
-            # TODO
-            print('Clicked on Set!')
-        elif button_id == ID.SET_CLOSE:
-            # TODO
-            print('Clicked on Set and Close!')
-        elif button_id == ID.CLOSE:
-            event.GetEventObject().GetTopLevelParent().Close(True)
-
-
-class MainFrame(wx.Frame):
-
-    def __init__(self):
-        size = wx.Size(550, 300)  # (width, height)
-
-        super(MainFrame, self).__init__(None, title='Brightness Control', size=size)
-
-        panel = wx.Panel(self, size=size)
-
-        sizer = wx.BoxSizer(orient=wx.VERTICAL)
-        sizer.AddMany([
-            (HeaderCtrl(panel),    wx.SizerFlags().Border(wx.LEFT | wx.TOP, 20)),
-            (ValueField(panel),    wx.SizerFlags().Border(wx.TOP, 15).Center()),
-            (ValueButtons(panel),  wx.SizerFlags().Border(wx.TOP, 15).Center()),
-            (0, 0, 1),  # AddStretchSpacer(1)
-            (BottomButtons(panel), wx.SizerFlags().Border(wx.BOTTOM, 20).Center())
-        ])
-
-        panel.SetSizer(sizer)
-
-        self.Show()
-        self.Center()
-
-
-if __name__ == '__main__':
-    app = wx.App()
-    MainFrame()
-    app.MainLoop()

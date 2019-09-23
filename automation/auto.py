@@ -4,8 +4,6 @@ from pyautogui import size, moveTo
 from pywinauto import Application, Desktop
 from pywinauto.application import ProcessNotFoundError
 
-from action_center import action_center
-
 
 class ControlNotFound(Exception):
     """Raised when the control wasn't found"""
@@ -64,7 +62,7 @@ def start_app():
 
 
 def start(value):
-    _, window = start_app()
+    app, window = start_app()
 
     settings_button = window.child_window(auto_id='Btn_MultiMon_MonitorSetting')
     brightness = window.child_window(auto_id='Slider_Brightness')
@@ -80,13 +78,15 @@ def start(value):
     tray_menuclick('menuExit')
     # app.kill()
 
-    if value <= 35:
-        action_center('Night light', enable=True)
-    else:
-        action_center('Night light', enable=False)
+    # TODO Add optional "Night light" field
+    # if value <= 35:
+    #     action_center('Night light', enable=True)
+    # else:
+    #     action_center('Night light', enable=False)
 
 
 if __name__ == '__main__':
+    # For testing purposes only
     parser = ArgumentParser(description='OnScreen Control Brightness Changer')
     parser.add_argument('value', type=check_value, metavar='[0-100]')
     arg = parser.parse_args()
