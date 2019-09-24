@@ -1,5 +1,5 @@
 import wx
-import wx.lib.newevent
+import wx.lib.newevent as ne
 
 
 class ID:
@@ -8,4 +8,4 @@ class ID:
     SET_CLOSE = wx.NewIdRef()
     CLOSE = wx.ID_CLOSE
 
-    CompleteEvent, EVT_COMPLETE = wx.lib.newevent.NewEvent()
+    CompleteEvent, EVT_COMPLETE = ne.NewEvent()

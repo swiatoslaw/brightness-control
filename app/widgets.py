@@ -31,6 +31,7 @@ class ValueField(masked.TextCtrl):
                                validRegex=r'^([0-9]\s\s|[1-9][0-9]\s|100)$')
 
         self.Bind(wx.EVT_TEXT, self.on_edit)
+        wx.PostEvent(self, wx.CommandEvent(wx.wxEVT_TEXT))
 
     # noinspection PyUnusedLocal
     def on_edit(self, event):
@@ -80,10 +81,10 @@ class BottomButtons(wx.BoxSizer):
 
         super(BottomButtons, self).__init__(wx.HORIZONTAL)
 
-        button_set = wx.Button(parent, id=ID.SET, label='Set')
-        button_set_close = wx.Button(parent, id=ID.SET_CLOSE, label='Set and Close')
-        button_close = wx.Button(parent, id=ID.CLOSE, label='Close')
+        self.button_set = wx.Button(parent, id=ID.SET, label='Set')
+        self.button_set_close = wx.Button(parent, id=ID.SET_CLOSE, label='Set and Close')
+        self.button_close = wx.Button(parent, id=ID.CLOSE, label='Close')
 
-        for button in [button_set, button_set_close, button_close]:
+        for button in [self.button_set, self.button_set_close, self.button_close]:
             button.SetFont(font)
             self.Add(button, flags)
