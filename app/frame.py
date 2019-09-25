@@ -42,8 +42,8 @@ class MainFrame(wx.Frame):
         ])
         self.panel.SetSizer(sizer)
 
-        self.Show()
         self.Center()
+        self.Show()
 
     def on_set(self, event):
         if not self.worker:
