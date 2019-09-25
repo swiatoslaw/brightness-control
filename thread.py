@@ -19,7 +19,10 @@ class AutomationThread(Thread):
 
     def run(self):
         auto.start(self.value)
-        wx.PostEvent(self.window, ID.CompleteEvent(close_app=self.button_id == ID.SET_CLOSE))
+        wx.PostEvent(
+            self.window,
+            ID.CompleteEvent(value=self.value, close_app=self.button_id == ID.SET_CLOSE)
+        )
 
     def abort(self):
         self.aborted = True

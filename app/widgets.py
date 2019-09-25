@@ -19,7 +19,7 @@ class HeaderCtrl(wx.StaticText):
 
 class ValueField(masked.TextCtrl):
 
-    def __init__(self, parent):
+    def __init__(self, parent, value):
         size = wx.Size(250, -1)
         font = wx.Font(wx.FontInfo(16).Bold().FaceName("Consolas"))
         style = wx.TE_CENTER
@@ -32,6 +32,9 @@ class ValueField(masked.TextCtrl):
 
         self.Bind(wx.EVT_TEXT, self.on_edit)
         wx.PostEvent(self, wx.CommandEvent(wx.wxEVT_TEXT))
+
+        if value:
+            self.SetValue(value)
 
     # noinspection PyUnusedLocal
     def on_edit(self, event):

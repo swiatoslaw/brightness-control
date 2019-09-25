@@ -1,5 +1,6 @@
 import wx
 
+from app.data import get_last_value, save_value
 from app.definitions import ID
 from app.widgets import HeaderCtrl, ValueField, ValueButtons, BottomButtons
 from thread import AutomationThread
@@ -9,11 +10,12 @@ from thread import AutomationThread
 class MainFrame(wx.Frame):
 
     def __init__(self):
-        super(MainFrame, self).__init__(None, title='Brightness Control', size=wx.Size(550, 300))
+        style = wx.DEFAULT_FRAME_STYLE & ~(wx.RESIZE_BORDER | wx.MAXIMIZE_BOX)
+        super(MainFrame, self).__init__(None, title='Brightness Control', size=wx.Size(550, 300), style=style)
 
         self.panel = wx.Panel(self)
-        self.field = ValueField(self.panel)
         self.buttons = BottomButtons(self.panel)
+        self.field = ValueField(self.panel, get_last_value())
 
         self.setup_ui()
 
@@ -50,6 +52,8 @@ class MainFrame(wx.Frame):
             self.worker = AutomationThread(self, value, event.GetId())
 
     def on_complete(self, event):
+        save_value(event.value)
+
         if event.close_app:
             self.Close(True)
 
