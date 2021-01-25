@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>475</width>
-    <height>274</height>
+    <width>492</width>
+    <height>207</height>
    </rect>
   </property>
   <property name="font">
@@ -24,22 +24,22 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <property name="spacing">
-     <number>20</number>
+     <number>5</number>
     </property>
     <property name="leftMargin">
-     <number>20</number>
+     <number>5</number>
     </property>
     <property name="topMargin">
-     <number>20</number>
+     <number>5</number>
     </property>
     <property name="rightMargin">
-     <number>20</number>
+     <number>5</number>
     </property>
     <property name="bottomMargin">
-     <number>20</number>
+     <number>5</number>
     </property>
     <item alignment="Qt::AlignHCenter|Qt::AlignTop">
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="label_info">
       <property name="font">
        <font>
         <pointsize>10</pointsize>
@@ -49,6 +49,20 @@
       </property>
       <property name="text">
        <string>Change the brightness/contrast value</string>
+      </property>
+     </widget>
+    </item>
+    <item alignment="Qt::AlignHCenter">
+     <widget class="QLabel" name="label_last_value">
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Last value: </string>
       </property>
      </widget>
     </item>
@@ -93,6 +107,25 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="button_50">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>45</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>50</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="button_60">
         <property name="sizePolicy">
          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
@@ -108,6 +141,44 @@
         </property>
         <property name="text">
          <string>60</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="button_70">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>45</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>70</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="button_80">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>45</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>80</string>
         </property>
        </widget>
       </item>
